@@ -52,7 +52,7 @@ export function generateMetadata({ params }) {
   };
 }
 
-export async function getViewsCount(): Promise<
+async function getViewsCount(): Promise<
   {
     slug: string;
     count: number;
