@@ -1,20 +1,21 @@
-import { formatDate, getBlogPosts } from 'app/blog/utils'
-import { CustomMDX } from 'app/components/mdx'
-import { baseUrl } from 'app/sitemap'
-import { notFound } from 'next/navigation'
+import { formatDate, getBlogPosts } from 'app/blog/utils';
+import { CustomMDX } from 'app/components/mdx';
+import { baseUrl } from 'app/sitemap';
+import { notFound } from 'next/navigation';
+import { visitEachChild } from 'typescript';
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts()
+  let posts = getBlogPosts();
 
-  return posts.map((post) => ({
+  return posts.map(post => ({
     slug: post.slug,
-  }))
+  }));
 }
 
 export function generateMetadata({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+  let post = getBlogPosts().find(post => post.slug === params.slug);
   if (!post) {
-    return
+    return;
   }
 
   let {
@@ -22,10 +23,10 @@ export function generateMetadata({ params }) {
     publishedAt: publishedTime,
     summary: description,
     image,
-  } = post.metadata
+  } = post.metadata;
   let ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+    : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
@@ -48,14 +49,33 @@ export function generateMetadata({ params }) {
       description,
       images: [ogImage],
     },
-  }
+  };
 }
 
-export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+export async function getViewsCount(): Promise<
+  {
+    slug: string;
+    count: number;
+  }[]
+> {
+  // if (!process.env.POSTGERS_URL) {
+  //   return [];
+  // }
+
+  return [{ slug: 'vim', count: 1234 }];
+
+  // return sql `
+  // SELECT slug, count FROM views
+  // `
+}
+
+export default async function Blog({ params }) {
+  const views = await getViewsCount();
+  const count = views.find(view => view.slug === params.slug)?.count ?? 0;
+  let post = getBlogPosts().find(post => post.slug === params.slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -89,10 +109,13 @@ export default function Blog({ params }) {
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
         </p>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          {count.toLocaleString()} views
+        </p>
       </div>
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
     </section>
-  )
+  );
 }
