@@ -5,19 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          'var(--font-geist-sans)',
-          'var(--font-inter)',
-          'system-ui',
-          'sans-serif',
-        ],
-        mono: [
-          'var(--font-geist-mono)',
-          'var(--font-jetbrains-mono)',
-          'monospace',
-        ],
-        inter: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        jetbrains: ['var(--font-jetbrains-mono)', 'monospace'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'monospace'],
         bubbles: ['var(--font-rubik-bubbles)', 'cursive'],
       },
     },
