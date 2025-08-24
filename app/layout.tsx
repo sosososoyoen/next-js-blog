@@ -2,12 +2,33 @@ import './global.css';
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
+import { Inter, JetBrains_Mono, Rubik_Bubbles } from 'next/font/google';
 import { Navbar } from './components/nav';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
 import { themeEffect } from 'utils/themeEffect';
+
+// Google Fonts 설정
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-jetbrains-mono',
+});
+
+const rubikBubbles = Rubik_Bubbles({
+  subsets: ['latin'],
+  weight: '400', // Rubik Bubbles는 400 weight만 지원
+  display: 'swap',
+  variable: '--font-rubik-bubbles',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -50,7 +71,10 @@ export default function RootLayout({
       className={cx(
         'text-black bg-white dark:text-white dark:bg-black',
         GeistSans.variable,
-        GeistMono.variable
+        GeistMono.variable,
+        inter.variable,
+        jetbrainsMono.variable,
+        rubikBubbles.variable
       )}
     >
       <head>
@@ -62,7 +86,7 @@ export default function RootLayout({
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />
           {children}
-          <Footer />
+          {/* <Footer /> */}
           <Analytics />
           <SpeedInsights />
         </main>
