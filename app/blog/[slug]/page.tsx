@@ -2,7 +2,8 @@ import { formatDate, getBlogPosts } from 'app/blog/utils';
 import { CustomMDX } from 'app/components/mdx';
 import { baseUrl } from 'app/sitemap';
 import { notFound } from 'next/navigation';
-import { visitEachChild } from 'typescript';
+import { Suspense } from 'react';
+import ViewsDisplay from 'app/components/views-display';
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -12,8 +13,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }) {
-  let post = getBlogPosts().find(post => post.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  let post = getBlogPosts().find(post => post.slug === resolvedParams.slug);
   if (!post) {
     return;
   }
@@ -52,27 +54,9 @@ export function generateMetadata({ params }) {
   };
 }
 
-async function getViewsCount(): Promise<
-  {
-    slug: string;
-    count: number;
-  }[]
-> {
-  // if (!process.env.POSTGERS_URL) {
-  //   return [];
-  // }
-
-  return [{ slug: 'vim', count: 1234 }];
-
-  // return sql `
-  // SELECT slug, count FROM views
-  // `
-}
-
 export default async function Blog({ params }) {
-  const views = await getViewsCount();
-  const count = views.find(view => view.slug === params.slug)?.count ?? 0;
-  let post = getBlogPosts().find(post => post.slug === params.slug);
+  const resolvedParams = await params;
+  let post = getBlogPosts().find(post => post.slug === resolvedParams.slug);
 
   if (!post) {
     notFound();
@@ -109,9 +93,15 @@ export default async function Blog({ params }) {
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
         </p>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {count.toLocaleString()} views
-        </p>
+        <Suspense
+          fallback={
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              --- views
+            </p>
+          }
+        >
+          <ViewsDisplay slug={resolvedParams.slug} />
+        </Suspense>
       </div>
       <article className="prose">
         <CustomMDX source={post.content} />
