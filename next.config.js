@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['next-mdx-remote'],
   experimental: {
-    ppr: true, // Partial Prerendering 활성화
+    ppr: true,
   },
 };
 
