@@ -1,17 +1,10 @@
 import { BlogPosts } from 'app/components/posts';
+import AnimatedImage from './components/animated-image';
 
 export default function Page() {
   return (
     <section>
-      <div className="mb-8">
-        <div className="flex align-items">
-          <img
-            src="/images/bubbles_3d_1.png"
-            alt="Profile picture"
-            width={300}
-          />
-        </div>
-      </div>
+      <AnimatedImage />
       <div>
         <h1 className="text-2xl font-bubbles tracking-tighter mb-4 text-blue-400">
           oh Bubbles, my Bubbles!
