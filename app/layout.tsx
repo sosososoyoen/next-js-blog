@@ -21,15 +21,15 @@ const rubikBubbles = Rubik_Bubbles({
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Next.js Portfolio Starter',
-    template: '%s | Next.js Portfolio Starter',
+    default: 'oh Bubbles, my Bubbles!',
+    template: '%s | oh Bubbles, my Bubbles!',
   },
-  description: 'This is my portfolio.',
+  description: 'This is my blog.',
   openGraph: {
-    title: 'My Portfolio',
-    description: 'This is my portfolio.',
+    title: 'oh Bubbles, my Bubbles!',
+    description: 'This is my blog.',
     url: baseUrl,
-    siteName: 'My Portfolio',
+    siteName: 'oh Bubbles, my Bubbles!',
     locale: 'en_US',
     type: 'website',
   },
@@ -72,7 +72,7 @@ export default function RootLayout({
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />
           {children}
-          {/* <Footer /> */}
+           <Footer />
           <Analytics />
           <SpeedInsights />
         </main>
