@@ -1,7 +1,7 @@
-import { getBlogPosts } from 'app/blog/utils';
+import { getBaseUrl, getBlogPosts } from 'app/blog/utils';
 import { MetadataRoute } from 'next';
 
-export const baseUrl = process.env.VERCEL_URL ?? 'http://localhost:3000';
+export const baseUrl = getBaseUrl();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogs = getBlogPosts().map(post => ({

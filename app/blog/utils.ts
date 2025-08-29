@@ -8,6 +8,30 @@ type Metadata = {
   image?: string
 }
 
+export function getBaseUrl(): URL {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const vercel = process.env.VERCEL_URL?.trim(); // Vercel이 제공 (protocol 없음)
+
+  // 우선순위: NEXT_PUBLIC_SITE_URL > VERCEL_URL > localhost
+  const raw = fromEnv
+    ? fromEnv
+    : vercel
+      ? `https://${vercel}`
+      : 'http://localhost:3000';
+
+  try {
+    return new URL(raw);
+  } catch {
+    // 혹시라도 오타/빈값 등으로 깨져도 안전하게
+    return new URL('http://localhost:3000');
+  }
+}
+
+/** 마지막 슬래시 제거한 문자열 */
+export function baseUrlString(): string {
+  return getBaseUrl().toString().replace(/\/$/, '');
+}
+
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
   let match = frontmatterRegex.exec(fileContent)
