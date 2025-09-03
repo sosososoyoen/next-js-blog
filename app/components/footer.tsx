@@ -42,8 +42,9 @@ export default function Footer() {
           </a>
         </li>
       </ul>
-      <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        © {new Date().getFullYear()} MIT Licensed
+      <p className="mt-8 text-neutral-400 dark:text-neutral-300 text-xs">
+        © {new Date().getFullYear()}. 이소연. All rights reserved. <br />
+        This blog is built with <a className="underline" href="https://vercel.com/templates/next.js/portfolio-starter-kit">Portfolio Blog Starter</a>
       </p>
     </footer>
   )

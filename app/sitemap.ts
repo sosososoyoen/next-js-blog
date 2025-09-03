@@ -1,4 +1,4 @@
-import { getBaseUrl, getBlogPosts } from 'app/blog/utils';
+import { getBaseUrl, getBlogPosts } from 'app/blog/server-utils';
 import { MetadataRoute } from 'next';
 
 export const baseUrl = getBaseUrl();
