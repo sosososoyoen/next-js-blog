@@ -173,7 +173,7 @@ CREATE TABLE views (
 
 ### 블로그 시스템
 
-- **포스트 파싱**: `app/blog/utils.ts`의 `getBlogPosts`
+- **포스트 파싱**: `app/blog/server-utils.ts`의 `getBlogPosts`
 - **MDX 렌더링**: `app/components/mdx.tsx`
 - **날짜 포맷팅**: `app/blog/utils.ts`의 `formatDate`
 

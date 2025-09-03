@@ -6,13 +6,18 @@ type Metadata = {
   publishedAt: string
   summary: string
   image?: string
+  tags?: string[]
 }
 
 export function getBaseUrl(): URL {
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  const vercel = process.env.VERCEL_URL?.trim(); // Vercel이 제공 (protocol 없음)
+  const isDev = process.env.NODE_ENV === 'development';
+  if (isDev) {
+    return new URL('http://localhost:3000');
+  }
 
-  // 우선순위: NEXT_PUBLIC_SITE_URL > VERCEL_URL > localhost
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const vercel = process.env.VERCEL_URL?.trim();
+
   const raw = fromEnv
     ? fromEnv
     : vercel
@@ -22,7 +27,6 @@ export function getBaseUrl(): URL {
   try {
     return new URL(raw);
   } catch {
-    // 혹시라도 오타/빈값 등으로 깨져도 안전하게
     return new URL('http://localhost:3000');
   }
 }
@@ -42,9 +46,31 @@ function parseFrontmatter(fileContent: string) {
 
   frontMatterLines.forEach((line) => {
     let [key, ...valueArr] = line.split(': ')
+    key = key.trim()
     let value = valueArr.join(': ').trim()
-    value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value
+
+    if (key === 'tags') {
+      // 태그 배열 파싱 ['tag1', 'tag2'] 형식
+      try {
+        const tagsString = value.replace(/^\[|\]$/g, '').trim();
+        if (tagsString) {
+          // 문자열에서 태그 추출 - 쉼표로 구분되고 따옴표로 둘러싸인 태그들
+          const tags = tagsString.split(',').map(tag =>
+            tag.trim().replace(/^['"]|['"]$/g, '')
+          );
+          metadata.tags = tags;
+        } else {
+          metadata.tags = [];
+        }
+      } catch (e) {
+        console.error('태그 파싱 오류:', e);
+        metadata.tags = [];
+      }
+    } else {
+      value = value.replace(/^['"](.*)['"]$/, '$1')
+      // @ts-ignore
+      metadata[key as keyof Metadata] = value;
+    }
   })
 
   return { metadata: metadata as Metadata, content }
@@ -77,38 +103,14 @@ export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), 'app', 'posts'))
 }
 
-export function formatDate(date: string, includeRelative = false) {
-  let currentDate = new Date()
-  if (!date.includes('T')) {
-    date = `${date}T00:00:00`
-  }
-  let targetDate = new Date(date)
+export function getAllTags() {
+  const posts = getBlogPosts();
+  const tagsSet = new Set<string>();
 
-  let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear()
-  let monthsAgo = currentDate.getMonth() - targetDate.getMonth()
-  let daysAgo = currentDate.getDate() - targetDate.getDate()
+  posts.forEach(post => {
+    const tags = post.metadata.tags || [];
+    tags.forEach(tag => tagsSet.add(tag));
+  });
 
-  let formattedDate = ''
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`
-  } else {
-    formattedDate = 'Today'
-  }
-
-  let fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-
-  if (!includeRelative) {
-    return fullDate
-  }
-
-  return `${fullDate} (${formattedDate})`
+  return Array.from(tagsSet).sort();
 }

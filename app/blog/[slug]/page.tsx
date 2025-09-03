@@ -1,9 +1,8 @@
-import { formatDate, getBlogPosts } from 'app/blog/utils';
+import { getBlogPosts } from 'app/blog/server-utils';
 import { CustomMDX } from 'app/components/mdx';
 import { baseUrl } from 'app/sitemap';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
-import ViewsDisplay from 'app/components/views-display';
+import { formatDate } from 'app/blog/client-utils';
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -86,23 +85,26 @@ export default async function Blog({ params }) {
           }),
         }}
       />
+      <p className="text-xs mb-1 text-neutral-600 dark:text-neutral-400">
+        {formatDate(post.metadata.publishedAt)}
+      </p>
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
-        <Suspense
-          fallback={
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              --- views
-            </p>
-          }
-        >
-          <ViewsDisplay slug={resolvedParams.slug} />
-        </Suspense>
+      <div className="flex justify-between items-center mt-2 mb-2 text-sm">
       </div>
+      {post.metadata.tags && post.metadata.tags.length > 0 && (
+        <div>
+          {post.metadata.tags.map(tag => (
+            <span
+              key={tag}
+              className="inline-block bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 px-3 py-1 mr-2 mb-2 rounded-full text-sm"
+            >
+                {tag}
+              </span>
+          ))}
+        </div>
+      )}
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
