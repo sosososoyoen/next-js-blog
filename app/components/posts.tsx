@@ -1,22 +1,20 @@
-import Link from 'next/link';
-import { getBlogPosts, getAllTags } from 'app/blog/server-utils';
-import { formatDate } from 'app/blog/client-utils';
-import { FilterableBlogPosts } from './filterable-posts';
+import { getBlogPosts } from 'app/blog/server-utils';
 import { PostItem } from './post-item';
+import { BlogPost } from '../blog/types';
 
-export function BlogPosts({showTag = false, filterByTag = false}) {
-  const allBlogs = getBlogPosts();
-  const allTags = getAllTags();
 
-  // filterByTag가 true이면 FilterableBlogPosts 컴포넌트 사용
-  if (filterByTag) {
-    return <FilterableBlogPosts posts={allBlogs} tags={allTags} />;
-  }
+interface BlogPostsProps {
+  showTags?: boolean;
+  blogPosts?: BlogPost[];
+}
+
+export function BlogPosts({ showTags = false, blogPosts }: BlogPostsProps) {
+  const posts = blogPosts ? blogPosts : getBlogPosts();
 
   // 기존 방식대로 포스트 목록 표시 (필터링 없이)
   return (
     <div>
-      {allBlogs
+      {posts
         .sort((a, b) => {
           if (
             new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
@@ -26,7 +24,7 @@ export function BlogPosts({showTag = false, filterByTag = false}) {
           return 1;
         })
         .map((post) => (
-          <PostItem key={post.slug} post={post} showTags={showTag} />
+          <PostItem key={post.slug} post={post} showTags={showTags} />
         ))}
     </div>
   );

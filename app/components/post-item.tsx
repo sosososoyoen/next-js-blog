@@ -25,12 +25,13 @@ export function PostItem({ post, showTags = true }: PostItemProps) {
       {showTags && post.metadata.tags && post.metadata.tags.length > 0 && (
         <div className="flex flex-wrap gap-1 ml-0 md:ml-[150px]">
           {post.metadata.tags.map(tag => (
-            <span
+            <Link
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+              href={`/tags/${tag}`}
+              className="text-xs px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors"
             >
               {tag}
-            </span>
+            </Link>
           ))}
         </div>
       )}
