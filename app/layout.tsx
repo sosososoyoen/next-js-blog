@@ -9,6 +9,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
 import { themeEffect } from 'utils/themeEffect';
+import { BLOG_NAME } from './lib/constants';
 
 // Google Fonts 설정
 const rubikBubbles = Rubik_Bubbles({
@@ -21,15 +22,15 @@ const rubikBubbles = Rubik_Bubbles({
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'oh Bubbles, my Bubbles!',
-    template: '%s | oh Bubbles, my Bubbles!',
+    default: BLOG_NAME,
+    template: `${BLOG_NAME} | %s`,
   },
-  description: 'This is my blog.',
+  description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.',
   openGraph: {
-    title: 'oh Bubbles, my Bubbles!',
-    description: 'This is my blog.',
+    title: BLOG_NAME,
+    description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.',
     url: baseUrl,
-    siteName: 'oh Bubbles, my Bubbles!',
+    siteName: BLOG_NAME,
     locale: 'en_US',
     type: 'website',
   },

@@ -3,6 +3,7 @@ import { CustomMDX } from 'app/components/mdx';
 import { baseUrl } from 'app/sitemap';
 import { notFound } from 'next/navigation';
 import { formatDate } from 'app/blog/client-utils';
+import Link from 'next/link';
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -96,12 +97,13 @@ export default async function Blog({ params }) {
       {post.metadata.tags && post.metadata.tags.length > 0 && (
         <div>
           {post.metadata.tags.map(tag => (
-            <span
+            <Link
               key={tag}
-              className="inline-block bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 px-3 py-1 mr-2 mb-2 rounded-full text-sm"
+              href={`/tags/${tag}`}
+              className="inline-block bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors px-3 py-1 mr-2 mb-2 rounded-full text-sm"
             >
                 {tag}
-              </span>
+              </Link>
           ))}
         </div>
       )}

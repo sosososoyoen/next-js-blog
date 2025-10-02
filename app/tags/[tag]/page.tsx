@@ -1,6 +1,8 @@
 import { getBlogPosts } from 'app/blog/server-utils';
 import { notFound } from 'next/navigation';
 import { BlogPosts } from 'app/components/posts';
+import { BLOG_NAME } from 'app/lib/constants';
+import type { Metadata } from 'next';
 
 interface TagPageProps {
   params: Promise<{
@@ -47,12 +49,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: TagPageProps) {
+export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
 
   return {
-    title: `${decodedTag} 태그 포스트`,
-    description: `#${decodedTag} 태그가 있는 블로그 포스트들을 확인하세요.`,
+    title: `${decodedTag} 태그`,
+    description: `${decodedTag} 태그가 있는 블로그 포스트들을 확인하세요.`,
   };
 }
