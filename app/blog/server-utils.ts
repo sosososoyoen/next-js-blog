@@ -1,13 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-
-type Metadata = {
-  title: string
-  publishedAt: string
-  summary: string
-  image?: string
-  tags?: string[]
-}
+import { Metadata } from './types';
 
 export function getBaseUrl(): URL {
   const isDev = process.env.NODE_ENV === 'development';

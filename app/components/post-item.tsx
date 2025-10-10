@@ -30,7 +30,7 @@ export function PostItem({ post, showTags = true, showThumbnail = true }: PostIt
         <div className="relative w-full aspect-[16/9] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
           <Image
             src={`/thumbnails/${post.metadata.thumbnail}`}
-            alt={`${post.metadata.title} 썸네일`}
+            alt={`${post.metadata.title} thumbnail`}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

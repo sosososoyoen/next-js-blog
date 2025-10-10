@@ -4,9 +4,11 @@ import { baseUrl } from 'app/sitemap';
 import { notFound } from 'next/navigation';
 import { formatDate } from 'app/blog/client-utils';
 import Link from 'next/link';
+import Image from 'next/image';
+import { BlogPost } from '../types';
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts();
+  let posts: BlogPost[] = getBlogPosts();
 
   return posts.map(post => ({
     slug: post.slug,
@@ -56,7 +58,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Blog({ params }) {
   const resolvedParams = await params;
-  let post = getBlogPosts().find(post => post.slug === resolvedParams.slug);
+  const post: BlogPost | undefined = getBlogPosts().find(post => post.slug === resolvedParams.slug);
 
   if (!post) {
     notFound();
@@ -102,12 +104,29 @@ export default async function Blog({ params }) {
               href={`/tags/${tag}`}
               className="inline-block bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors px-3 py-1 mr-2 mb-2 rounded-full text-sm"
             >
-                {tag}
-              </Link>
+              {tag}
+            </Link>
           ))}
         </div>
       )}
       <article className="prose">
+        {post.metadata.thumbnail && (
+          <div className="flex justify-center mb-6">
+          <Image
+            src={`/thumbnails/${post.metadata.thumbnail}`}
+            alt={`${post.metadata.title} thumbnail`}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: '100%',
+              maxWidth: 800,
+              height: 'auto',
+            }}
+            className="w-full"
+          />
+          </div>
+        )}
         <CustomMDX source={post.content} />
       </article>
     </section>
