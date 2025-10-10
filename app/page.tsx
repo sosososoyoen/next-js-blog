@@ -22,9 +22,6 @@ export default function Page() {
         <TypingText text={'oh Bubbles, my Bubbles!'} />
       </div>
       <p className="font-galmuri tracking-tight text-sm mb-2">IT, 개발에 대해 자유롭게 기록하는 공간입니다.</p>
-      <div className="mt-6">
-        <BlogPosts />
-      </div>
     </section>
   );
 }
