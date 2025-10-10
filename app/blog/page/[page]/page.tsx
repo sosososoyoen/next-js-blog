@@ -5,13 +5,13 @@ import Pagination from 'app/components/pagination';
 import { POSTS_PER_PAGE } from 'app/lib/constants';
 
 interface BlogPageProps {
-  params: {
+  params: Promise<{
     page: string;
-  };
+  }>;
 }
 
-export default function BlogPage({ params }: BlogPageProps) {
-  const currentPage = parseInt(params.page);
+export default async function BlogPage({ params }: BlogPageProps) {
+  const currentPage = parseInt((await params).page);
   const posts = getBlogPosts();
   const totalPosts = posts.length;
   const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);

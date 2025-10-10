@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 interface PaginationProps {
   currentPage: number;
@@ -10,11 +9,10 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, basePath }: PaginationProps) {
-  const router = useRouter();
 
   // 페이지 범위 계산 (현재 페이지 주변 2페이지씩 표시)
   const getPageRange = () => {
-    const range = [];
+    const range: number[] = [];
     const showPages = 5; // 표시할 페이지 수
     let start = Math.max(1, currentPage - 2);
     let end = Math.min(totalPages, start + showPages - 1);
