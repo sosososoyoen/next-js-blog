@@ -1,12 +1,3 @@
-@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
-
-@font-face {
-    font-family: 'Galmuri11';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-display: swap;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,8 +6,6 @@
 :root {
   --font-geist-sans: var(--font-geist-sans);
   --font-geist-mono: var(--font-geist-mono);
-  --font-rubik-bubbles: var(--font-rubik-bubbles);
-  --font-galmuri: 'Galmuri11', monospace;
 }
 
 /* 기본 폰트 설정 */

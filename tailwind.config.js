@@ -7,8 +7,6 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
-        bubbles: ['var(--font-rubik-bubbles)', 'cursive'],
-        galmuri: ['var(--font-galmuri)', 'cursive'],
       },
     },
   },
