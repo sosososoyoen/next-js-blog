@@ -1,9 +1,9 @@
-# 📋 Next.js 블로그 프로젝트 인수인계 메뉴얼
+# 📋 Next.js 블로그
 
 ## 🚀 프로젝트 개요
 
 **프로젝트명**: real-blog  
-**기술 스택**: Next.js 14 (App Router), TypeScript, Tailwind CSS, MDX  
+**기술 스택**: Next.js 15 (App Router), TypeScript, Tailwind CSS, MDX  
 **배포**: Vercel  
 **데이터베이스**: Neon (PostgreSQL)  
 **패키지 매니저**: pnpm
@@ -123,30 +123,6 @@ summary: '포스트 요약'
 
 ---
 
-## 📊 조회수 시스템
-
-### 데이터베이스 스키마
-
-```sql
-CREATE TABLE views (
-  slug VARCHAR PRIMARY KEY,
-  count INTEGER DEFAULT 0
-);
-```
-
-### 주요 함수
-
-- `getViewsCount()`: 모든 포스트의 조회수 조회
-- `incrementViewCount()`: 특정 포스트 조회수 증가
-
-### 현재 상태
-
-- Neon DB 연결 설정됨
-- 조회수는 페이지 방문 시 자동 증가
-- DB 연결 실패 시 목업 데이터 사용
-
----
-
 ## 🚀 배포 관리
 
 ### Vercel 배포
@@ -184,58 +160,3 @@ CREATE TABLE views (
 - **포스트 목록**: `app/components/posts.tsx`
 
 ---
-
-## 🐛 알려진 이슈 및 해결방법
-
-### 1. 조회수 관련 오류
-
-**문제**: SQL 쿼리에서 문자열 값 처리 오류
-**해결**: slug 값을 따옴표로 감싸기
-
-```sql
--- 잘못된 예
-INSERT INTO views (slug, count) VALUES (${slug}, 1)
-
--- 올바른 예
-INSERT INTO views (slug, count) VALUES ('${slug}', 1)
-```
-
-### 2. TypeScript 에러
-
-**문제**: `visitEachChild` import 미사용
-**해결**: `app/blog/[slug]/page.tsx`에서 해당 import 제거
-
----
-
-## 📞 긴급 연락처 및 리소스
-
-### 외부 서비스
-
-- **호스팅**: [Vercel](https://vercel.com)
-- **데이터베이스**: [Neon](https://neon.tech)
-- **폰트**: [Geist Font](https://vercel.com/font)
-
-### 참고 문서
-
-- [Next.js 공식 문서](https://nextjs.org/docs)
-- [Tailwind CSS 문서](https://tailwindcss.com/docs)
-- [MDX 문서](https://mdxjs.com/)
-
----
-
-## ✅ 인수인계 체크리스트
-
-- [ ] 로컬 개발 환경 구축 확인
-- [ ] 환경 변수 설정 확인
-- [ ] 새 포스트 작성 테스트
-- [ ] 빌드 및 배포 테스트
-- [ ] 조회수 시스템 동작 확인
-- [ ] Vercel 계정 권한 이전
-- [ ] Neon DB 접근 권한 이전
-- [ ] 도메인 관리 권한 이전 (해당시)
-
----
-
-**마지막 업데이트**: 2025년 8월 24일
-
-> 💡 **팁**: 코드 수정 시 TypeScript 에러를 먼저 해결하고, 로컬에서 충분히 테스트한 후 배포하세요!
