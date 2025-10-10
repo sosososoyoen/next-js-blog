@@ -1,7 +1,6 @@
 import { getBlogPosts } from 'app/blog/server-utils';
 import { notFound } from 'next/navigation';
 import { BlogPosts } from 'app/components/posts';
-import { BLOG_NAME } from 'app/lib/constants';
 import type { Metadata } from 'next';
 
 interface TagPageProps {
@@ -29,7 +28,7 @@ export default async function TagPage({ params }: TagPageProps) {
       <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
         #{decodeURIComponent(tag)} 태그 포스트
       </h1>
-      <BlogPosts blogPosts={filteredPosts} showTags={true} />
+      <BlogPosts blogPosts={filteredPosts} />
     </section>
   );
 }

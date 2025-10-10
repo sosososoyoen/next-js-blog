@@ -5,6 +5,7 @@ export type Metadata = {
   summary: string;
   image?: string;
   tags?: string[];
+  thumbnail?: string;
 };
 
 export type BlogPost = {

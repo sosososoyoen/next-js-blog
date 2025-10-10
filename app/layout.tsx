@@ -2,7 +2,6 @@ import './global.css';
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import { Rubik_Bubbles } from 'next/font/google';
 import { Navbar } from './components/nav';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -11,14 +10,6 @@ import { baseUrl } from './sitemap';
 import { themeEffect } from 'utils/themeEffect';
 import { BLOG_NAME } from './lib/constants';
 
-// Google Fonts 설정
-const rubikBubbles = Rubik_Bubbles({
-  subsets: ['latin'],
-  weight: '400', // Rubik Bubbles는 400 weight만 지원
-  display: 'swap',
-  variable: '--font-rubik-bubbles',
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -26,6 +17,28 @@ export const metadata: Metadata = {
     template: `${BLOG_NAME} | %s`,
   },
   description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.',
+  icons: {
+    icon: [
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
     title: BLOG_NAME,
     description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.',
@@ -61,7 +74,6 @@ export default function RootLayout({
         'text-black bg-white dark:text-white dark:bg-black',
         GeistSans.variable,
         GeistMono.variable,
-        rubikBubbles.variable
       )}
     >
       <head>

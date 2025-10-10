@@ -1,17 +1,23 @@
 import { BlogPosts } from 'app/components/posts';
+import { getBlogPosts } from './server-utils';
+import Pagination from 'app/components/pagination';
+import { POSTS_PER_PAGE } from 'app/lib/constants';
 
-export default function Page() {
+export default function BlogPage() {
+  const posts = getBlogPosts();
+  const totalPosts = posts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const currentPosts = posts.slice(0, POSTS_PER_PAGE);
+
   return (
     <section>
-      <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Posts</h1>
-      <BlogPosts showTags={true} />
+      <h1 className="font-bold text-2xl mb-8 tracking-tighter">Blog</h1>
+      <BlogPosts blogPosts={currentPosts} showTags showThumbnail />
+      <Pagination
+        currentPage={1}
+        totalPages={totalPages}
+        basePath="/blog/page"
+      />
     </section>
   );
-}
-
-export async function generateMetadata() {
-  return {
-    title: 'Posts | 포스트',
-    description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.'
-  };
 }

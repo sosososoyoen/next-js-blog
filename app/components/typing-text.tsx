@@ -46,11 +46,12 @@ export default function TypingText({ text }: { text: string }) {
 
   return (
     <div className="w-full flex" ref={scope}>
-      <h1 id="scramble-text" className="tracking-tight text-2xl font-galmuri font-bold mb-4 text-gray-800 dark:text-gray-100"
+      <h1 id="scramble-text" className="tracking-tight text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
           aria-hidden={true}>
       </h1>
-      <span className="blinking-cursor text-2xl font-galmuri font-bold mb-4 text-gray-800 dark:text-gray-100" aria-hidden={true}>|</span>
-      <h1 className="scramble-text-original text-2xl font-galmuri font-bold mb-4 text-gray-800 dark:text-gray-100 hidden">
+      <span className="blinking-cursor text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
+            aria-hidden={true}>|</span>
+      <h1 className="scramble-text-original text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100 hidden">
         {text}
       </h1>
     </div>
