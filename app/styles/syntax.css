@@ -1,0 +1,35 @@
+/* Light mode styles */
+pre {
+  @apply p-4 rounded-lg bg-gray-100 overflow-x-auto;
+}
+
+code {
+  @apply text-gray-800;
+}
+
+.sh__line { @apply text-gray-800; }
+.sh__class { @apply text-purple-600; }
+.sh__keyword { @apply text-blue-600; }
+.sh__string { @apply text-green-600; }
+.sh__number { @apply text-orange-600; }
+.sh__comment { @apply text-gray-500; }
+.sh__function { @apply text-yellow-600; }
+.sh__variable { @apply text-red-600; }
+
+/* Dark mode styles */
+.dark pre {
+  @apply bg-gray-800;
+}
+
+.dark code {
+  @apply text-gray-200;
+}
+
+.dark .sh__line { @apply text-gray-200; }
+.dark .sh__class { @apply text-purple-400; }
+.dark .sh__keyword { @apply text-blue-400; }
+.dark .sh__string { @apply text-green-400; }
+.dark .sh__number { @apply text-orange-400; }
+.dark .sh__comment { @apply text-gray-400; }
+.dark .sh__function { @apply text-yellow-400; }
+.dark .sh__variable { @apply text-red-400; }

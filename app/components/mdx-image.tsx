@@ -11,10 +11,9 @@ interface MDXImageProps {
 
 export function MDXImage({ src, alt, width = 800, className }: MDXImageProps) {
   const isExternal = src.startsWith('http');
-  const imageSrc = isExternal ? src : `/posts/${src}`;
+  const imageSrc = isExternal ? src : `/posts/${src.replace(/^\//, '')}`;
 
   return (
-    <div className={`relative ${className || ''}`}>
       <Image
         src={imageSrc}
         alt={alt}
@@ -24,11 +23,9 @@ export function MDXImage({ src, alt, width = 800, className }: MDXImageProps) {
         style={{
           width: '100%',
           maxWidth: width,
-          height: 'auto'
+          height: 'auto',
         }}
-        className="rounded-lg"
         quality={100}
       />
-    </div>
   );
 }
