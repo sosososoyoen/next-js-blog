@@ -1,4 +1,3 @@
-import { BlogPosts } from 'app/components/posts';
 import TypingText from './components/typing-text';
 
 export default function Page() {

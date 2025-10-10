@@ -26,6 +26,28 @@ export const metadata: Metadata = {
     template: `${BLOG_NAME} | %s`,
   },
   description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.',
+  icons: {
+    icon: [
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
     title: BLOG_NAME,
     description: 'IT, 개발에 대해 자유롭게 기록하는 공간입니다.',
