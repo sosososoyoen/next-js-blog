@@ -22,35 +22,45 @@ export default function TypingText({ text }: { text: string }) {
       opacity: 0,
     });
 
-    cursorTl.current = gsap.timeline({ repeat: -1 }).to('.blinking-cursor', {
-      opacity: 0,
-      duration: 0.5,
-      ease: 'steps(1)',
-      delay: 0.2,
-    }).to('.blinking-cursor', {
-      opacity: 1,
-      duration: 0.5,
-      ease: 'steps(1)',
-      delay: 0.2,
-    });
+    cursorTl.current = gsap
+      .timeline({ repeat: -1 })
+      .to('.blinking-cursor', {
+        opacity: 0,
+        duration: 0.5,
+        ease: 'steps(1)',
+        delay: 0.2,
+      })
+      .to('.blinking-cursor', {
+        opacity: 1,
+        duration: 0.5,
+        ease: 'steps(1)',
+        delay: 0.2,
+      });
 
     tl.current.to('#scramble-text', {
       scrambleText: {
         text: text,
-        chars: '01',
+        chars: 'oO',
+        revealDelay: 0.5,
+        speed: 0.3,
       },
       duration: 1,
     });
-
   }, [text]);
 
   return (
     <div className="w-full flex" ref={scope}>
-      <h1 id="scramble-text" className="tracking-tight text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
-          aria-hidden={true}>
-      </h1>
-      <span className="blinking-cursor text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
-            aria-hidden={true}>|</span>
+      <h1
+        id="scramble-text"
+        className="tracking-tight text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
+        aria-hidden={true}
+      ></h1>
+      <span
+        className="blinking-cursor text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
+        aria-hidden={true}
+      >
+        |
+      </span>
       <h1 className="scramble-text-original text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100 hidden">
         {text}
       </h1>

@@ -12,7 +12,7 @@ function ArrowIcon() {
         fill="currentColor"
       />
     </svg>
-  )
+  );
 }
 
 export default function Footer() {
@@ -43,9 +43,15 @@ export default function Footer() {
         </li>
       </ul>
       <p className="mt-8 text-neutral-400 dark:text-neutral-300 text-xs">
-        © {new Date().getFullYear()}. 이소연. All rights reserved. <br />
-        This blog is built with <a className="underline" href="https://vercel.com/templates/next.js/portfolio-starter-kit">Portfolio Blog Starter</a>
+        © {new Date().getFullYear()}. bubbles.log <br />
+        This blog is built with{' '}
+        <a
+          className="underline"
+          href="https://vercel.com/templates/next.js/portfolio-starter-kit"
+        >
+          Portfolio Blog Starter
+        </a>
       </p>
     </footer>
-  )
+  );
 }
