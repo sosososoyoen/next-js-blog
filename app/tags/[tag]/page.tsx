@@ -13,9 +13,6 @@ export default async function TagPage({ params }: TagPageProps) {
   const allPosts = getBlogPosts();
 
   const decodedTag = decodeURIComponent(tag);
-
-  console.log('Generating page for tag:', decodedTag);
-
   // 해당 태그를 가진 포스트만 필터링
   const filteredPosts = allPosts.filter(
     post => post.metadata.tags && post.metadata.tags.includes(decodedTag)
@@ -56,7 +53,7 @@ export async function generateStaticParams() {
   });
 
   return Array.from(tags).map(tag => ({
-    tag: encodeURIComponent(tag),
+    tag: tag,
   }));
 }
 
