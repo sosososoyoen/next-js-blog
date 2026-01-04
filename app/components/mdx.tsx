@@ -4,6 +4,7 @@ import { highlight } from 'sugar-high';
 import React from 'react';
 import { MDXImage } from './mdx-image';
 import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks'; // import 추가
 
 function CustomLink(props) {
   let href = props.href;
@@ -127,7 +128,8 @@ export function CustomMDX(props) {
       {...props}
       options={{
         mdxOptions: {
-          remarkPlugins: [remarkGfm],
+          remarkPlugins: [remarkBreaks],
+          format: 'mdx',
         },
       }}
       components={{ ...components, ...(props.components || {}) }}
