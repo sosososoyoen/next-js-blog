@@ -11,13 +11,20 @@ interface PostItemProps {
   showThumbnail?: boolean;
 }
 
-export function PostItem({ post, showTags = true, showThumbnail = true }: PostItemProps) {
+export function PostItem({
+  post,
+  showTags = true,
+  showThumbnail = true,
+}: PostItemProps) {
   const router = useRouter();
 
-  const handleTagClick = (e: React.MouseEvent<HTMLAnchorElement>, tag: string) => {
+  const handleTagClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    tag: string
+  ) => {
     e.preventDefault();
     e.stopPropagation();
-    router.push(`/tags/${tag}`);
+    router.push(`/tags/${encodeURIComponent(tag)}`);
   };
 
   return (
@@ -63,8 +70,8 @@ export function PostItem({ post, showTags = true, showThumbnail = true }: PostIt
             {post.metadata.tags.map(tag => (
               <a
                 key={tag}
-                href={`/tags/${tag}`}
-                onClick={(e) => handleTagClick(e, tag)}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                onClick={e => handleTagClick(e, tag)}
                 className="text-xs px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
               >
                 {tag}
