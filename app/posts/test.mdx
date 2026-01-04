@@ -5,11 +5,17 @@ summary: '테스트 포스트'
 tags: ['test']
 thumbnail: 'test-thumbnail.webp'
 ---
+
 # 헤딩1
+
 ## 헤딩2
+
 ### 헤딩3
+
 #### 헤딩4
+
 ##### 헤딩5
+
 ###### 헤딩6
 
 > A greater than…
@@ -17,48 +23,45 @@ thumbnail: 'test-thumbnail.webp'
 A backslash\
 before a line break…
 
-Some *asterisks* for emphasis.
+**"굵게"**
+**'굵게'**
+
+Some _asterisks_ for emphasis.
 
 Two **asterisks** for strong.
 
 `gooood`뉴스
 
+<Image src="test/chiikawa.webp" alt="치이카와" width={100} height={100} />
 
-
-<Image
-  src="test/chiikawa.webp"
-  alt="치이카와"
-  width={100}
-  height={100}
-/>
-
-![Alt text](/test/chiikawa.webp "title")
+![Alt text](/test/chiikawa.webp 'title')
 
 테스트테스트
-* 리스트1
-* 리스트2
-* 리스트3
+
+- 리스트1
+- 리스트2
+- 리스트3
 
 우리집에 왜 왔니
+
 1. 리스트1
 2. 리스트2
 3. 리스트3
 
-| 제목 1 | 제목 2 | 제목 3 |
-| --- | --- | --- |
+| 제목 1   | 제목 2   | 제목 3   |
+| -------- | -------- | -------- |
 | 내용 1-1 | 내용 1-2 | 내용 1-3 |
 | 내용 2-1 | 내용 2-2 | 내용 2-3 |
 | 내용 3-1 | 내용 3-2 | 내용 3-3 |
-
 
 [구글](http://www.google.com)
 
 ```ts
 //코드
 function greet(name: string): string {
-  return `Hello, ${name}!`
+  return `Hello, ${name}!`;
 }
 
 // This will throw an error at compile time, preventing potential runtime issues.
-let message: string = greet(123)
+let message: string = greet(123);
 ```

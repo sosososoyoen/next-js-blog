@@ -1,5 +1,4 @@
 import { getBlogPosts } from 'app/blog/server-utils';
-import { notFound } from 'next/navigation';
 import { BlogPosts } from 'app/components/posts';
 import type { Metadata } from 'next';
 
@@ -13,20 +12,30 @@ export default async function TagPage({ params }: TagPageProps) {
   const { tag } = await params;
   const allPosts = getBlogPosts();
 
+  const decodedTag = decodeURIComponent(tag);
   // 해당 태그를 가진 포스트만 필터링
-  const filteredPosts = allPosts.filter(post =>
-    post.metadata.tags && post.metadata.tags.includes(decodeURIComponent(tag))
+  const filteredPosts = allPosts.filter(
+    post => post.metadata.tags && post.metadata.tags.includes(decodedTag)
   );
 
-  // 해당 태그를 가진 포스트가 없으면 404 페이지로 이동
+  // 해당 태그를 가진 포스트가 없는 경우
   if (filteredPosts.length === 0) {
-    notFound();
+    return (
+      <section>
+        <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          #{decodedTag} 태그 포스트
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          해당 태그를 가진 포스트가 없습니다.
+        </p>
+      </section>
+    );
   }
 
   return (
     <section>
       <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
-        #{decodeURIComponent(tag)} 태그 포스트
+        #{decodedTag} 태그 포스트
       </h1>
       <BlogPosts blogPosts={filteredPosts} />
     </section>
@@ -44,11 +53,13 @@ export async function generateStaticParams() {
   });
 
   return Array.from(tags).map(tag => ({
-    tag: encodeURIComponent(tag),
+    tag: tag,
   }));
 }
 
-export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: TagPageProps): Promise<Metadata> {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
 

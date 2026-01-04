@@ -3,6 +3,7 @@
 import { formatDate } from 'app/blog/client-utils';
 import type { BlogPost } from 'app/blog/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface PostItemProps {
@@ -11,14 +12,12 @@ interface PostItemProps {
   showThumbnail?: boolean;
 }
 
-export function PostItem({ post, showTags = true, showThumbnail = true }: PostItemProps) {
+export function PostItem({
+  post,
+  showTags = true,
+  showThumbnail = true,
+}: PostItemProps) {
   const router = useRouter();
-
-  const handleTagClick = (e: React.MouseEvent<HTMLAnchorElement>, tag: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    router.push(`/tags/${tag}`);
-  };
 
   return (
     <div
@@ -61,14 +60,14 @@ export function PostItem({ post, showTags = true, showThumbnail = true }: PostIt
         {showTags && post.metadata.tags && post.metadata.tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-auto">
             {post.metadata.tags.map(tag => (
-              <a
+              <Link
                 key={tag}
-                href={`/tags/${tag}`}
-                onClick={(e) => handleTagClick(e, tag)}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                onClick={e => e.stopPropagation()}
                 className="text-xs px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
               >
                 {tag}
-              </a>
+              </Link>
             ))}
           </div>
         )}
