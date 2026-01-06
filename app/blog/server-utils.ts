@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 import { Metadata } from './types';
 
 export function getBaseUrl(): URL {
@@ -7,15 +7,9 @@ export function getBaseUrl(): URL {
   if (isDev) {
     return new URL('http://localhost:3000');
   }
-
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   const vercel = process.env.VERCEL_URL?.trim();
 
-  const raw = fromEnv
-    ? fromEnv
-    : vercel
-      ? `https://${vercel}`
-      : 'http://localhost:3000';
+  const raw = vercel ? `https://${vercel}` : 'http://localhost:3000';
 
   try {
     return new URL(raw);
@@ -30,17 +24,17 @@ export function baseUrlString(): string {
 }
 
 function parseFrontmatter(fileContent: string) {
-  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
-  let match = frontmatterRegex.exec(fileContent)
-  let frontMatterBlock = match![1]
-  let content = fileContent.replace(frontmatterRegex, '').trim()
-  let frontMatterLines = frontMatterBlock.trim().split('\n')
-  let metadata: Partial<Metadata> = {}
+  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
+  let match = frontmatterRegex.exec(fileContent);
+  let frontMatterBlock = match![1];
+  let content = fileContent.replace(frontmatterRegex, '').trim();
+  let frontMatterLines = frontMatterBlock.trim().split('\n');
+  let metadata: Partial<Metadata> = {};
 
-  frontMatterLines.forEach((line) => {
-    let [key, ...valueArr] = line.split(': ')
-    key = key.trim()
-    let value = valueArr.join(': ').trim()
+  frontMatterLines.forEach(line => {
+    let [key, ...valueArr] = line.split(': ');
+    key = key.trim();
+    let value = valueArr.join(': ').trim();
 
     if (key === 'tags') {
       // 태그 배열 파싱 ['tag1', 'tag2'] 형식
@@ -48,9 +42,9 @@ function parseFrontmatter(fileContent: string) {
         const tagsString = value.replace(/^\[|\]$/g, '').trim();
         if (tagsString) {
           // 문자열에서 태그 추출 - 쉼표로 구분되고 따옴표로 둘러싸인 태그들
-          const tags = tagsString.split(',').map(tag =>
-            tag.trim().replace(/^['"]|['"]$/g, '')
-          );
+          const tags = tagsString
+            .split(',')
+            .map(tag => tag.trim().replace(/^['"]|['"]$/g, ''));
           metadata.tags = tags;
         } else {
           metadata.tags = [];
@@ -60,40 +54,40 @@ function parseFrontmatter(fileContent: string) {
         metadata.tags = [];
       }
     } else {
-      value = value.replace(/^['"](.*)['"]$/, '$1')
+      value = value.replace(/^['"](.*)['"]$/, '$1');
       // @ts-ignore
       metadata[key as keyof Metadata] = value;
     }
-  })
+  });
 
-  return { metadata: metadata as Metadata, content }
+  return { metadata: metadata as Metadata, content };
 }
 
 function getMDXFiles(dir) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx')
+  return fs.readdirSync(dir).filter(file => path.extname(file) === '.mdx');
 }
 
 function readMDXFile(filePath) {
-  let rawContent = fs.readFileSync(filePath, 'utf-8')
-  return parseFrontmatter(rawContent)
+  let rawContent = fs.readFileSync(filePath, 'utf-8');
+  return parseFrontmatter(rawContent);
 }
 
 function getMDXData(dir) {
-  let mdxFiles = getMDXFiles(dir)
-  return mdxFiles.map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file))
-    let slug = path.basename(file, path.extname(file))
+  let mdxFiles = getMDXFiles(dir);
+  return mdxFiles.map(file => {
+    let { metadata, content } = readMDXFile(path.join(dir, file));
+    let slug = path.basename(file, path.extname(file));
 
     return {
       metadata,
       slug,
       content,
-    }
-  })
+    };
+  });
 }
 
 export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'app', 'posts'))
+  return getMDXData(path.join(process.cwd(), 'app', 'posts'));
 }
 
 export function getAllTags() {
