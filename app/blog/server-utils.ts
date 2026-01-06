@@ -7,9 +7,17 @@ export function getBaseUrl(): URL {
   if (isDev) {
     return new URL('http://localhost:3000');
   }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   const vercel = process.env.VERCEL_URL?.trim();
 
-  const raw = vercel ? `https://${vercel}` : 'http://localhost:3000';
+  let raw = 'http://localhost:3000';
+
+  if (siteUrl) {
+    raw = siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`;
+  } else if (vercel) {
+    raw = `https://${vercel}`;
+  }
 
   try {
     return new URL(raw);
